@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorText">#FF000000</color>
     <color name="colorButton">#20575757</color>
+    <color name="colorBackground_dialog">#FFFFFFFF</color>
 <!--    night theme -->
 <!--    <color name="colorText">#FFFFFFFF</color>-->
 <!--    <color name="colorButton">#18FFFFFF</color>-->

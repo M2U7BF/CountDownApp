@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground_dialog"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="タイトル"
+        android:text="通知の設定"
+        android:textColor="@color/colorText"
+        android:textSize="20sp" />
+
+    <RadioGroup
+        android:id="@+id/RadioGroup_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <RadioButton
+            android:id="@+id/RadioGroup_notification1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="なし(デフォルト)"
+            android:textColor="@color/colorText" />
+
+        <RadioButton
+            android:id="@+id/RadioGroup_notification2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当日"
+            android:textColor="@color/colorText" />
+
+        <RadioButton
+            android:id="@+id/RadioGroup_notification3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="前日"
+            android:textColor="@color/colorText" />
+
+        <RadioButton
+            android:id="@+id/RadioGroup_notification4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2日前"
+            android:textColor="@color/colorText" />
+
+        <RadioButton
+            android:id="@+id/RadioGroup_notification5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="一週間前"
+            android:textColor="@color/colorText" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_notification_custum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="25dp"
+        android:paddingTop="10dp"
+        android:text="カスタム"
+        android:textColor="@color/colorText"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show time here"
+        android:paddingLeft="25dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/colorText"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/textView_notification_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="キャンセル"
+            android:textColor="@color/colorText"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textColor="@color/colorText"
+            tools:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textView_notification_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OK"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorText"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

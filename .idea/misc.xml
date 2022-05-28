@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2595886230468748" />
         <entry key="app/src/main/res/layout/activity_set_data.xml" value="0.20497131347656256" />
         <entry key="app/src/main/res/layout/activity_set_notification.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialog_notification.xml" value="0.2948028564453125" />
         <entry key="app/src/main/res/layout/dialog_notification_custum.xml" value="0.2078125" />
         <entry key="app/src/main/res/layout/fragment_date_picker.xml" value="0.1" />
         <entry key="app/src/main/res/layout/listview_row.xml" value="0.20790863037109378" />

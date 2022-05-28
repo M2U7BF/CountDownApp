@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground_dialog"
+    android:padding="25dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,11 +14,17 @@
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="title" />
+            android:layout_marginBottom="10dp"
+            android:hint="title"
+            android:text="通知のカスタム"
+            android:textSize="24sp" />
 
-        <NumberPicker
+        <EditText
+            android:id="@+id/editTextNumber"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -50,12 +58,42 @@
             android:text="繰り返し"
             android:textAlignment="textEnd" />
 
-        <Button
-            android:id="@+id/button"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#00FFFFFF"
-            android:text="Button"
-            android:textColor="@color/colorText" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:id="@+id/textView_negative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:text="キャンセル"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textView_positive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="10dp"
+                android:text="OK"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
