@@ -1,0 +1,73 @@
+追加ボタンでの要素追加(https://android.keicode.com/basics/ui-listview.php)
+テキスト入力
+    追加ボタンを押すとテキスト入力画面に遷移 → わかりやすいため採用
+    画面遷移においてActivityの遷移よりfragmentの遷移のほうが軽いため採用
+     fragmentの実装(https://akira-watson.com/android/activity-fragment.html)
+        fragmentの切り替え時に追加ボタンを非表示にする
+    or
+    ポップアップ
+    ②項目
+    タイトル
+    日にち(https://developer.android.com/guide/topics/ui/controls/pickers?hl=ja)
+        fragmentでの日付表示
+                fragmentでonclick設定
+            ①activityのshowDateで日付データ生成
+            ②onDateSetで日付取得
+            ③受け渡し
+                return使用不可
+                → (aresei-note.com/ データ受け渡し)
+            ②fragmentでsetText
+        書式設定
+
+
+追加機能
+● ･ 未来の日付の場合表示を変える
+･ 通知が来るようにする
+    頻度:毎日〜X日ごと,X週間ごと,
+    手段:メール,ライン,
+    デザイン:背景に画像を設定できる
+    内容
+    当日、前日、〜日前...はRadioButton
+    カスタムはOnClickListenerの処理
+● ･ ソート機能
+● ･ ソート機能 元に戻す
+● ･ ソート機能 タイトル順
+･ 分類機能 〜まで と 〜から に分け
+    絞り込み機能(startがこれからのもののみ表示みたいな)
+● ･ 削除、編集
+･ データ閲覧機能(ポイント制など)
+    設定ボタンを押す
+    flagmentで表示
+    datasetのsize
+･ 追加をより簡単にする(Main画面での横スクロールで追加画面へ)
+･ 試験とかに応援キャラをつけることができる。キャラが応援してくれる
+･ 仲間内で共有できる
+･ ホーム画面に オリンピックのあと〜日! の表示みたいに設置できるようにする
+･ ダークモードへの対応(アイコンの切り替え)
+･ 編集ボタンを押して{編集、削除、通知の設定}を選択し、各フラグメントで処理。Activityを使わない
+･ Googleカレンダーなどと連携
+
+
+バージョン管理の導入
+(https://qiita.com/TAKANEKOMACHI/items/0101f0ff88fad2696e81)
+
+改善
+
+
+Error
+    2022/05/20
+        setTextのnullpointerException
+        解決
+            型の宣言で変数を新たに宣言していた
+    2022/05/25
+        日にちが編集で更新されない
+        (startDate自体は変更されているようだ)
+        2022/05/25解決
+    2022/05/27
+        RuntimeException ClassNotFoundException on path: DexPathList[[zi ~
+        【解決】
+        マニフェストを確認
+
+工夫
+クリップアートの使用(https://developer.android.com/studio/write/vector-asset-studio)
+
