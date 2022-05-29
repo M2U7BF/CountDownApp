@@ -40,8 +40,6 @@ public class MySimpleAdapter extends SimpleAdapter {
         // ビューを受け取る
         View view = convertView;
 
-        c = (Common) new Common();
-
         if (view == null) {
             view = inflater.inflate(R.layout.listview_row, parent, false);
 
@@ -58,11 +56,13 @@ public class MySimpleAdapter extends SimpleAdapter {
 
         ImageButton btn = view.findViewById(R.id.button_notification_setting);
         btn.setOnClickListener( v -> {
-            //https://weblog.hirohiro716.com/?p=244
-            System.out.println("mylog/"+ position);
-            c.clickedPosition = position;
             MainActivity activity = (MainActivity) v.getContext();
-            activity.showNotificationDialog(v);
+            c = new Common();
+            //https://weblog.hirohiro716.com/?p=244
+            System.out.println("mylog/"+ "Adapterでのポジションは : " + position);
+//            c.clickedPosition = position;
+
+            activity.showNotificationDialog(v,position);
         });
 
         String text1 = Objects.requireNonNull(((HashMap<?, ?>) listData.get(position)).get("title")).toString();

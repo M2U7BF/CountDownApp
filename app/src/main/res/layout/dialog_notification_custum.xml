@@ -45,10 +45,10 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView_custumNotification_showTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="showTime"
+            android:hint="タップして時間を設定"
             android:textSize="20sp" />
 
         <Switch

@@ -60,8 +60,9 @@ public class DialogFragmentForCustomNotification extends DialogFragment {
         dialog.findViewById(R.id.textView_negative).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Common c = (Common)getActivity().getApplication();
                 MainActivity activity = (MainActivity) getActivity();
-                activity.showNotificationDialog(getView());
+                activity.showNotificationDialog(getView(),c.clickedPosition);
                 dismiss();
             }
         });

@@ -6,7 +6,9 @@ public class CompareObjects {
     private final String title;
     private final String startDate;
     private final int differenceOfDate;
-    private final Calendar notificationTime = null;
+    private String textNotificationTime = null;
+    private Calendar notificationTime = null;
+    private int notificationCheckedId;
     Common c;
 
     public CompareObjects(String title, String startDate){
@@ -29,4 +31,23 @@ public class CompareObjects {
         return this.differenceOfDate;
     }
 
+    public int getNotificationCheckedId() {
+        return notificationCheckedId;
+    }
+
+    public String getTextNotificationTime() {
+        return textNotificationTime;
+    }
+
+    public void setNotificationTime(Calendar notificationTime){
+        this.notificationTime = notificationTime;
+    }
+
+    public void setNotificationCheckedId(int notificationCheckedId) {
+        this.notificationCheckedId = notificationCheckedId;
+    }
+
+    public void setTextNotificationTime(String textNotificationTime) {
+        this.textNotificationTime = textNotificationTime;
+    }
 }

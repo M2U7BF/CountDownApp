@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -21,13 +24,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     NotificationManagerCompat notificationManagerCompat;
     Notification notification;
 
@@ -141,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         dialogFragment.show(getSupportFragmentManager(),"my_dialog");
     }
 
-    public void showNotificationDialog(View view){
+    public void showNotificationDialog(View view, int position){
+        c.clickedPosition = position;
         DialogFragment dialogFragment = new DialogFragment_Notification();
         dialogFragment.show(getSupportFragmentManager(),"notification_dialog");
     }
@@ -151,9 +157,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         dialogFragment.show(getSupportFragmentManager(),"notification_Custom_dialog");
     }
 
-//    public void showTimePickerDialog(View view){
-//        DialogFragment dialogFragment = new DialogFragmentForCustomNotification();
-//        dialogFragment.show(getSupportFragmentManager(),"notification_Custom_dialog");
+//    public void showTimePickerDialog(View v) {
+//        DialogFragment newFragment = new TimePick();
+//        newFragment.show(getSupportFragmentManager(), "timePicker");
+//    }
+//    @Override
+//    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//        String str = String.format(Locale.JAPAN, "%d:%d", hourOfDay, minute);
+//
+//        Bundle result = new Bundle();
+//        result.putString("bundleKey", str);
+//
+//        System.out.println("mylog/"+result);
+//        // The child fragment needs to still set the result on its parent fragment manager
+//        getSupportFragmentManager().setFragmentResult("requestKey", result);
+//
 //    }
 
     public void push(View view){

@@ -28,6 +28,7 @@ public class Common extends Application {
     public boolean sortSwitch_title = false;
     public WindowManager.LayoutParams lp = null;
     public String DateReceiver = null;
+    public int checkedId = 0;
 
     public int DateCalculator(String startDate){
         //開始日から、表示する日数の算出

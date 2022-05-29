@@ -67,14 +67,14 @@
         android:paddingLeft="25dp"
         android:paddingTop="10dp"
         android:text="カスタム"
-        android:textColor="@color/colorText"
+        android:textColor="#6397FF"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textView_notification_showTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show time here"
+        android:hint="タップして時間を設定"
         android:paddingLeft="25dp"
         android:paddingTop="10dp"
         android:textColor="@color/colorText"

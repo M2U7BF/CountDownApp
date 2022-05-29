@@ -2,24 +2,32 @@ package com.example.countdownapp;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
-public class DialogFragment_Notification extends DialogFragment{
+public class DialogFragment_Notification extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
         Common c;
+        Dialog d;
 
         @NonNull
         @Override
@@ -29,11 +37,9 @@ public class DialogFragment_Notification extends DialogFragment{
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-//            //Dialogレイアウトにviewを取得
-//            val inflater = requireActivity().layoutInflater;
-//            val root = inflater.inflate(R.layout.dialog, null)
-
             Dialog dialog = new Dialog(getActivity());
+
+
 
             // タイトル非表示
             dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -47,9 +53,41 @@ public class DialogFragment_Notification extends DialogFragment{
             //ラジオボタンのチェックを設定する
             RadioGroup radioGroup = dialog.findViewById(R.id.RadioGroup_notification);
 
+            c = (Common)getActivity().getApplication();
+            TextView showTime = dialog.findViewById(R.id.textView_notification_showTime);
+
+            CompareObjects co;
+            System.out.println("mylog/dialogが受け取っているposition : "+c.clickedPosition);
+            co = (CompareObjects) c.dataset.get(c.clickedPosition);
 
 
+            //再表示のための設定
+            if(co.getNotificationCheckedId() != 0 && co.getNotificationCheckedId() != R.id.RadioGroup_notification1) {
+                RadioButton radioButton = dialog.findViewById(co.getNotificationCheckedId());
+                radioButton.setChecked(true);
+            }
+            if(co.getTextNotificationTime() != null){
+                showTime.setText(co.getTextNotificationTime());
+            }
 
+            getChildFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
+                @Override
+                public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                    String result = bundle.getString("bundleKey");
+                    // Do something with the result..
+                    showTime.setText(result);
+                }
+            });
+
+
+            //TimePickerの表示
+            dialog.findViewById(R.id.textView_notification_showTime).setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    showTimePickerDialog_notificationDialog(v);
+                }
+            });
+            //カスタムを選択したときの処理
             dialog.findViewById(R.id.textView_notification_custum).setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -62,8 +100,6 @@ public class DialogFragment_Notification extends DialogFragment{
             dialog.findViewById(R.id.textView_notification_positive).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("mylog/" + "選択された項目を表示します");
-                    c = (Common)getActivity().getApplication();
                     CompareObjects d = (CompareObjects) c.dataset.get(c.clickedPosition);
                     String startDate = d.getStartDate();
                     Calendar cal = new GregorianCalendar();
@@ -73,68 +109,93 @@ public class DialogFragment_Notification extends DialogFragment{
                     //状態を取得し、保存
                     //http://androidguide.nomaki.jp/html/widget/radiobutton/getchecked.html
                     final int checkedId = radioGroup.getCheckedRadioButtonId();
-                    System.out.println("mylog/" + "選択された項目を表示します/"+checkedId);
-                    switch (checkedId){
-                        case R.id.RadioGroup_notification1:
-                            break;
-                        case R.id.RadioGroup_notification2:
-                            System.out.println("mylog/" + "当日");
-                            c.DateReceiver = startDate;
-                            //時間選択へ遷移
 
-                            break;
-                        case R.id.RadioGroup_notification3:
-                            System.out.println("mylog/" + "前日");
-                            //ミリ秒まで表示
-                            try{
-                                cal.setTime(c.sdf2.parse(startDate));
-                            }catch (ParseException e){
-                                cal = null;
+                    String date = null;
+
+                    if(checkedId == R.id.RadioGroup_notification1){
+                        //状態を保存
+                        co.setNotificationCheckedId(checkedId);
+
+                        //終了
+                        dismiss();
+                    }else {
+                        switch (checkedId) {
+                            case R.id.RadioGroup_notification2:
+                                System.out.println("mylog/" + "当日");
+                                date = startDate;
+                                break;
+                            case R.id.RadioGroup_notification3:
+                                System.out.println("mylog/" + "前日");
+                                //ミリ秒まで表示
+                                try {
+                                    cal.setTime(c.sdf2.parse(startDate));
+                                } catch (ParseException e) {
+                                    cal = null;
+                                }
+                                cal.add(Calendar.DATE, -1);
+                                System.out.println("mylog/" + cal);
+                                calendar_text = c.sdf2.format(cal.getTime());
+                                System.out.println("mylog/" + calendar_text);
+                                date = calendar_text;
+                                break;
+                            case R.id.RadioGroup_notification4:
+                                System.out.println("mylog/" + "2日前");
+                                //ミリ秒まで表示
+                                try {
+                                    cal.setTime(c.sdf2.parse(startDate));
+                                } catch (ParseException e) {
+                                    cal = null;
+                                }
+                                cal.add(Calendar.DATE, -2);
+                                calendar_text = c.sdf2.format(cal.getTime());
+                                date = calendar_text;
+                                //時間選択へ遷移
+
+                                break;
+                            case R.id.RadioGroup_notification5:
+                                System.out.println("mylog/" + "1週間前");
+                                //ミリ秒まで表示
+                                try {
+                                    cal.setTime(c.sdf2.parse(startDate));
+                                } catch (ParseException e) {
+                                    cal = null;
+                                }
+                                cal.add(Calendar.DATE, -7);
+                                calendar_text = c.sdf2.format(cal.getTime());
+                                date = calendar_text;
+                                break;
+                        }
+
+                        boolean saveOK = false;
+
+                        //バリデーション
+                        TextView textView = dialog.findViewById(R.id.textView_notification_showTime);
+                        if("".equals(textView.getText())){
+                            String toastMessage = "通知の時間が設定されていません";
+                            Toast toast = Toast.makeText(getActivity(), toastMessage, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }else{
+                            saveOK = true;
+                        }
+
+                        //状態を保存
+                        if(saveOK) {
+                            String saveTimetx = date + " " + textView.getText() + ":00:000";
+                            Calendar saveTime = Calendar.getInstance();
+                            try {
+                                saveTime.setTime(c.sdf.parse(saveTimetx));
+                            } catch (ParseException e) {
+                                saveTime = null;
                             }
-                            cal.add(Calendar.DATE,-1);
-                            System.out.println("mylog/" + cal);
-                            calendar_text = c.sdf2.format(cal.getTime());
-                            System.out.println("mylog/" + calendar_text);
-                            c.DateReceiver = calendar_text;
-                            //時間選択へ遷移
 
-                            break;
-                        case R.id.RadioGroup_notification4:
-                            System.out.println("mylog/" + "2日前");
-                            //ミリ秒まで表示
-                            try{
-                                cal.setTime(c.sdf2.parse(startDate));
-                            }catch (ParseException e){
-                                cal = null;
-                            }
-                            cal.add(Calendar.DATE,-2);
-                            System.out.println("mylog/" + cal);
-                            calendar_text = c.sdf2.format(cal.getTime());
-                            System.out.println("mylog/" + calendar_text);
-                            c.DateReceiver = calendar_text;
-                            //時間選択へ遷移
+                            co.setTextNotificationTime((String) textView.getText());
+                            co.setNotificationCheckedId(checkedId);
+                            co.setNotificationTime(saveTime);
 
-                            break;
-                        case R.id.RadioGroup_notification5:
-                            System.out.println("mylog/" + "1週間前");
-                            //ミリ秒まで表示
-                            try{
-                                cal.setTime(c.sdf2.parse(startDate));
-                            }catch (ParseException e){
-                                cal = null;
-                            }
-                            cal.add(Calendar.DATE,-7);
-                            System.out.println("mylog/" + cal);
-                            calendar_text = c.sdf2.format(cal.getTime());
-                            System.out.println("mylog/" + calendar_text);
-                            c.DateReceiver = calendar_text;
-                            //時間選択へ遷移
-
-                            break;
+                            //終了
+                            dismiss();
+                        }
                     }
-                    //時間設定が必要な場合移動
-
-                    dismiss();
                 }
             });
             // Close ボタンのリスナ
@@ -145,64 +206,20 @@ public class DialogFragment_Notification extends DialogFragment{
                 }
             });
 
-//            builder.setTitle("通知の設定")
-//                    .setPositiveButton("OK", (dialogInterface, i) -> {
-//                    })
-//                    .setItems(choices, (dialog, which) -> {
-//                        c = (Common)getActivity().getApplication();
-//
-//                        //あと何日 の場合
-//                        //当日(startDate)、前日(startDate -1 + 時間)、2日前(startDate -2 + 時間)、1週間前(startDate -7 + 時間)、 + 時間(デフォルトは0)
-//                        //~日ごと(startDate + x + 時間) //倍数判定でよいのでは
-//                        //毎週~曜日 //曜日判定
-//
-//                        CompareObjects d = (CompareObjects) c.dataset.get(c.clickedPosition);
-//                        String startDate = d.getStartDate();
-//                        Calendar cal = new GregorianCalendar();
-//
-//                        switch (which){
-//                            case 0:
-//                                break;
-//                            case 1:
-//                                System.out.println("mylog/" + "当日");
-//                                c.DateReceiver = startDate;
-//                                //ミリ秒まで表示
-//                                try{
-//                                cal.setTime(c.sdf2.parse(startDate));
-//                                }catch (ParseException e){
-//                                    cal = null;
-//                                }
-//                                cal.add(Calendar.DATE,-1);
-//                                System.out.println("mylog/" + cal);
-//                                String cal_text = c.sdf.format(cal.getTime());
-//                                System.out.println("mylog/" + cal_text);
-//                                //時間選択へ遷移
-//
-//                                break;
-//                            case 2:
-//                                System.out.println("mylog/" + "前日");
-//                                //時間選択へ遷移
-//                                break;
-//                            case 3:
-//                                System.out.println("mylog/" + "2日前");
-//                                //時間選択へ遷移
-//                                break;
-//                            case 4:
-//                                System.out.println("mylog/" + "一週間前(7日前)");
-//                                //時間選択へ遷移
-//                                break;
-//                            case 5:
-//                                System.out.println("mylog/" + "カスタム");
-//                                MainActivity activity = (MainActivity) getActivity();
-//                                activity.showNotification_CustomDialog(getView());
-////                                DialogFragment dialogFragment = new DialogFragmentForCustomNotification();
-////                                dialogFragment.show(, "notification_Custom_dialog");
-//                                break;
-//                        }
-//                    });
-//
-//            return builder.create();
+            d = dialog;
             return dialog;
         }
+
+        public void showTimePickerDialog_notificationDialog(View v) {
+            DialogFragment newFragment = new TimePick();
+            newFragment.show(getChildFragmentManager(), "timePicker");
+        }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String str = String.format(Locale.JAPAN, "%d:%d", hourOfDay, minute);
+            TextView textView = d.findViewById(R.id.textView_notification_showTime);
+            textView.setText(str);
+    }
 
 }
